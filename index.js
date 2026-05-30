@@ -12,7 +12,15 @@ const kanbanRoutes = require('./routes/kanban');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+const corsOptions = {
+  origin: [
+    'http://localhost:5173',
+    'https://devboard-frontend-chi.vercel.app/'  // replace with your actual Vercel URL
+  ],
+  credentials: true
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Routes
