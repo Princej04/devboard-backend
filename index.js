@@ -1,0 +1,32 @@
+const express = require('express');
+const cors = require('cors');
+require('dotenv').config();
+
+const authRoutes = require('./routes/auth');
+const problemRoutes = require('./routes/problems');
+const projectRoutes = require('./routes/projects');
+const goalRoutes = require('./routes/goals');
+const aiRoutes = require('./routes/ai');
+const kanbanRoutes = require('./routes/kanban');
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+app.use(cors());
+app.use(express.json());
+
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/problems', problemRoutes);
+app.use('/api/projects', projectRoutes);
+app.use('/api/goals', goalRoutes);
+app.use('/api/ai', aiRoutes);
+app.use('/api/kanban', kanbanRoutes);
+
+app.get('/', (req, res) => {
+  res.json({ message: 'DevBoard API is running!' });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

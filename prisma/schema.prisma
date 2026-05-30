@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  name      String
+  email     String    @unique
+  password  String
+  createdAt DateTime  @default(now())
+  problems  Problem[]
+  projects  Project[]
+  goals     Goal[]
+  kanbanCards KanbanCard[]
+}
+
+model Problem {
+  id         String   @id @default(uuid())
+  title      String
+  topic      String
+  difficulty String
+  platform   String
+  notes      String?
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  createdAt  DateTime @default(now())
+}
+
+model Project {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  techStack   String
+  githubUrl   String?
+  liveUrl     String?
+  status      String
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+}
+
+model Goal {
+  id        String   @id @default(uuid())
+  title     String
+  target    Int
+  current   Int      @default(0)
+  unit      String
+  week      String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model KanbanCard {
+  id        String   @id @default(uuid())
+  title     String
+  tag       String
+  column    String   @default("To Study")
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+}
