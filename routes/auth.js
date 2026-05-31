@@ -21,7 +21,8 @@ router.post('/register', async (req, res) => {
 
     res.status(201).json({ message: 'User created', userId: user.id });
   } catch (err) {
-    res.status(500).json({ error: 'Something went wrong' });
+    console.error("LOGIN_ERROR_DETAILS:", err); // This is the key!
+    res.status(500).json({ error: "Something went wrong", details: err.message });
   }
 });
 
