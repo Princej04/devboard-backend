@@ -27,7 +27,8 @@ router.post('/', protect, async (req, res) => {
     });
     res.status(201).json(card);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to create card' });
+    console.error("🔥 KANBAN POST CRASH:", err); // This is what we need!
+    res.status(500).json({ error: 'Failed to create card', details: err.message });
   }
 });
 
